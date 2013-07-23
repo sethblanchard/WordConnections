@@ -1,0 +1,82 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+    </head>
+    <body>
+        <section id="input">
+            <textarea id="words">
+            </textarea>
+            <input type="submit" value="Parse"/>
+        </section>
+        <section id="results">
+            <div id="visualResult"></div>
+            <div id="textResults"></div>
+        </section>
+
+        <!-- build:js scripts/main.js -->
+        <script src="bower_components/jquery/jquery.js"></script>
+        <script src="scripts/main.js"></script>
+        <!-- endbuild -->
+        <script>
+
+            //This script will find connections between words in a block of text
+            //Super simple implemention right now. We assume that if a word is in 
+            //sentance with another word they have a connection
+            //we'll make a network graph of words in text from how words are connected in sentances
+            //Using this example http://bl.ocks.org/mbostock/4062045
+            var textParser = function(textForParsing, delimiter){
+
+                var _me = this;
+
+                _me.textToParse = textForParsing;
+
+                _me.groupDelimiter = delimiter;
+
+                _me.result = {};
+
+                //Implement as Promise so you can do loading screen...
+                _me.Parse = function(){
+                    //split text block into sentances
+                    var groups = _me.textToParse.split(groupDelimiter);
+                    for(var group in groups){
+                        //split sentances into words
+                        var words = group.split(' ');
+                        //Loop through twice and generate links
+                        for(var word in words){
+                            if(results[word] === undefined){
+                                results[word] = {};
+                            }
+
+                        }
+                        
+                    }
+                };
+
+            };
+
+            $(function(){
+
+                  $("input").on("submit", function(){
+                        var parser = new textParser($("#words").val(), ".");
+                        var result = parser.ParseText();
+                    });
+
+            })
+        </script>
+</body>
+</html>
